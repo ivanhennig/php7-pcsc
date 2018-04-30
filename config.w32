@@ -1,0 +1,7 @@
+ARG_WITH("pcsc", "PC/SC Support", "no");
+
+if (PHP_PCSC != "no") {
+    ADD_FLAG("LIBS","winscard.lib");
+    EXTENSION("pcsc", "pcsc.c");
+    PHP_INSTALL_HEADERS("ext/pcsc", "php_pcsc.h");
+}
