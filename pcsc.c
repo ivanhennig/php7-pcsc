@@ -672,10 +672,10 @@ PHP_FUNCTION(scard_transmit)
   BYTE *recvBuffer;
   DWORD sendLen, recvLen;
   LONG rc;
-  char *apdu;
+  zval *apdu;
   int apduLen;
   
-  if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rz", &conn_res, &apdu, &apduLen) == FAILURE) {
+  if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "rz", &conn_res, &apdu) == FAILURE) {
     return;
   }
 
@@ -700,7 +700,7 @@ PHP_FUNCTION(scard_transmit)
   }
 
   /* Get buffer to send */
-  sendBuffer = e_hex_to_bytes(apdu, &sendLen);
+  sendBuffer = e_hex_to_bytes(Z_STRVAL_P(apdu), &sendLen);
 
   /* Guess the size of the buffer to recv */
   recvLen    = 2 + 256;
